@@ -1,5 +1,6 @@
 <script>
-  import Nav from "$lib/components/Nav.svelte"
+  import Footer from "$lib/components/Footer.svelte"
+import Nav from "$lib/components/Nav.svelte"
 </script>
 
 <svelte:head>
@@ -32,8 +33,11 @@
 
 <main>
   <Nav />
-  <slot />
+  <div class="slot">
+    <slot />
+  </div>
   <div class="background" />
+  <Footer />
 </main>
 
 <style lang="scss">
@@ -53,5 +57,13 @@
     height: 100vh;
     background-color: #466272;
     transition: background-color ease-in-out;
+  }
+
+  div.slot {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 </style>
