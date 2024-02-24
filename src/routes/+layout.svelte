@@ -1,9 +1,12 @@
 <script>
   import Footer from "$lib/components/Footer.svelte"
-import Nav from "$lib/components/Nav.svelte"
+  import Nav from "$lib/components/Nav.svelte"
+
+  let timeUntilNext = "[timeUntilNext]"
 </script>
 
 <svelte:head>
+  <title>{timeUntilNext} | LCHS Go</title>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -17,7 +20,8 @@ import Nav from "$lib/components/Nav.svelte"
     href="https://fonts.googleapis.com/css2?family=Niramit:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap"
     rel="stylesheet"
   />
-  <link rel="apple-touch-icon" href="%sveltekit.assets%/appFavicon.png" />
+  <link rel="apple-touch-icon" href="/whiteFavicon.png" />
+  <link rel="icon" type="image/x-icon" href="/clearFavicon.png" />
   <style>
     *,
     *::before,

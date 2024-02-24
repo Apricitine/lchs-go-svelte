@@ -2,10 +2,10 @@
   <span>
     Made with ❤️ by the LCiTeam
   </span>
-  <a href="javascript:void">
+  <a href="https://forms.gle/BgFW4MgL9RGpezdw7">
     Report a bug
   </a>
-  <a href="javascript:void">
+  <a href="https://chromewebstore.google.com/detail/lchs-go/bddnpkadgjcbafnmbampfbaiijafealk">
     Install the extension
   </a>
 </footer>
