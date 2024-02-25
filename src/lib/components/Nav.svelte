@@ -19,7 +19,7 @@
 
 <style lang="scss">
   header {
-    padding: 4% 0 4% 0;
+    padding: 4% 2% 4% 2%;
     display: grid;
     place-content: center;
 

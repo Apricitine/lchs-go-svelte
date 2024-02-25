@@ -1,13 +1,18 @@
 <footer>
+  <span> Made with ❤️ by the LCiTeam </span>
   <span>
-    Made with ❤️ by the LCiTeam
+    <a href="https://forms.gle/BgFW4MgL9RGpezdw7" target="_blank">
+      Report a bug
+    </a>
   </span>
-  <a href="https://forms.gle/BgFW4MgL9RGpezdw7" target="_blank">
-    Report a bug
-  </a>
-  <a href="https://chromewebstore.google.com/detail/lchs-go/bddnpkadgjcbafnmbampfbaiijafealk" target="_blank">
-    Install the extension
-  </a>
+  <span>
+    <a
+      href="https://chromewebstore.google.com/detail/lchs-go/bddnpkadgjcbafnmbampfbaiijafealk"
+      target="_blank"
+    >
+      Install the extension
+    </a>
+  </span>
 </footer>
 
 <style lang="scss">

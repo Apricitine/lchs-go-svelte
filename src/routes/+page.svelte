@@ -1,1 +1,102 @@
-this is the now page
+<script lang="ts">
+  import dayjs from "dayjs"
+
+  let circleProgress: number = 50
+
+  let now: string = dayjs().format("hh:mm")
+  setInterval(() => {
+    now = dayjs().format("hh:mm")
+  }, 200)
+</script>
+
+<div class="now-container">
+  <h1 class="welcome">Hi Tom!</h1>
+  <main class="schedule-container">
+    <div class="period-info">
+      <div class="progress">
+        <div class="circle"></div>
+        <div class="bar"></div>
+        <div class="circle"></div>
+        <div class="tracker" style="top: {circleProgress}%">
+          <span>{now[0] === "0" ? now.slice(1) : now}</span>
+        </div>
+      </div>
+      <div class="info">adsfads</div>
+    </div>
+    <div class="all-periods">ff</div>
+  </main>
+</div>
+
+<style lang="scss">
+  $circle-width: 1.25rem;
+
+  $clear-gray: hsla(0, 0, 0, 0.25);
+  $clear-white: hsla(0, 0, 100%, 0.5);
+
+  .now-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 38.4%;
+
+    .welcome {
+      font-size: 125%;
+    }
+
+    .schedule-container {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+
+      .period-info {
+        width: 100%;
+        display: flex;
+        background-color: $clear-gray;
+
+        .progress {
+          display: flex;
+          width: 15%;
+          height: 42.4vh;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          padding: 1rem;
+
+          .circle {
+            width: $circle-width;
+            height: $circle-width * 1.16;
+            border-style: solid;
+            border-width: 2px;
+            border-radius: 50% 50% 50% 50%;
+            border-color: $clear-white;
+          }
+
+          .bar {
+            width: 1px;
+            height: 100%;
+            border-color: $clear-white;
+            border-style: solid;
+            border-width: 1px;
+          }
+
+          .tracker {
+            display: grid;
+            place-content: center;
+            border-radius: 50%;
+            background-color: $clear-gray;
+            backdrop-filter: blur(1000px);
+            width: 35px;
+            height: 35px;
+            position: absolute;
+
+            span {
+              font-size: 11.5px;
+              font-weight: 300;
+            }
+          }
+        }
+      }
+    }
+  }
+</style>
