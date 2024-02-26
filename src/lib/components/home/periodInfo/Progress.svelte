@@ -26,7 +26,7 @@
   .progress {
     display: flex;
     width: 15%;
-    height: 42.4vh;
+    height: 52.5vh;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;

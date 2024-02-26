@@ -3,6 +3,7 @@
   import Nav from "$lib/components/Nav.svelte"
 
   let timeUntilNext = "[timeUntilNext]"
+
 </script>
 
 <svelte:head>

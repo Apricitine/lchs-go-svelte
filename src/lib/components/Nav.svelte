@@ -1,6 +1,7 @@
 <script>
   import { page } from "$app/stores"
   import routes from "$lib/routes"
+  import { translate } from "$lib/translate"
 </script>
 
 <header>
@@ -8,10 +9,11 @@
     {#each routes as route}
       <a
         href={route.name === "home" ? "/" : route.name}
-        class={($page.url.pathname.length === 1 ? "home" : $page.url.pathname.slice(1)) ===
-        `${route.name}`
+        class={($page.url.pathname.length === 1
+          ? "home"
+          : $page.url.pathname.slice(1)) === `${route.name}`
           ? "selected"
-          : ""}>{route.name}</a
+          : ""}>{translate(route.name, "english")}</a
       >
     {/each}
   </nav>

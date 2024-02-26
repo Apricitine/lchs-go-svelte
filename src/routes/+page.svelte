@@ -1,10 +1,16 @@
 <script lang="ts">
   import Info from "$lib/components/home/periodInfo/Info.svelte"
-import Progress from "$lib/components/home/periodInfo/Progress.svelte";
+  import Progress from "$lib/components/home/periodInfo/Progress.svelte"
+  import { interpolateTranslation, translate } from "$lib/translate"
 </script>
 
 <div class="now-container">
-  <h1 class="welcome">Hi Tom!</h1>
+  <h1 class="welcome">
+    {interpolateTranslation(translate("greeting1", "english"), {
+      timeOfDay: "Afternoon",
+      schedule: "Regular Schedule",
+    })}
+  </h1>
   <main class="schedule-container">
     <div class="period-info">
       <Progress />
