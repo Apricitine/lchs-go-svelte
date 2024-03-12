@@ -1,42 +1,43 @@
 <script lang="ts">
   import Info from "$lib/components/home/periodInfo/Info.svelte"
   import Progress from "$lib/components/home/periodInfo/Progress.svelte"
-  import { interpolateTranslation, translate } from "$lib/translate"
-  import type { Languages } from "$lib/translate"
+  import {
+    interpolateTranslation,
+    translate,
+    type Languages,
+    languages,
+  } from "$lib/translate"
   import dayjs from "dayjs"
-  import { getSettings } from "$lib/settings"
-  import type { Settings } from "$lib/settings"
-  import { onMount } from "svelte"
+  import { type Settings } from "$lib/settings"
+  import { randomPick } from "$lib/utilities"
+  import { settings } from "$lib/settings"
   import { browser } from "$app/environment"
 
-  let settings: Settings
-
-  onMount(() => {
-    if (browser) {
-      settings = getSettings() as Settings
-    }
-  })
-
   const schedule = "Regular Schedule"
+  let greeting: string
 
-  const getTimeOfDay = (language: Languages) => {
+  const getTimeOfDayGreeting = (language: Languages) => {
     const now = dayjs().hour()
-    if (now < 12) {
-      return translate("morning", language)
-    } else if (now < 18) {
-      return translate("afternoon", language)
-    } else {
-      return translate("evening", language)
-    }
+    if (now < 12) return translate("morning", language)
+    else if (now < 18) return translate("afternoon", language)
+    else return translate("evening", language)
   }
+
+  console.log($settings)
+
+  greeting = interpolateTranslation(
+    translate(randomPick(["greeting1", "greeting2", "greeting3"]), $settings.language),
+    {
+      timeOfDay: getTimeOfDayGreeting($settings.language).toLowerCase(),
+      schedule: schedule.toLowerCase(),
+    }
+  )
+
 </script>
 
 <div class="now-container">
   <h1 class="welcome">
-    {interpolateTranslation(translate("greeting1", settings.language), {
-      timeOfDay: getTimeOfDay(settings.language),
-      schedule: schedule,
-    })}
+    {greeting}
   </h1>
   <main class="schedule-container">
     <div class="period-info">
@@ -48,7 +49,7 @@
 </div>
 
 <style lang="scss">
-  $clear-gray: hsla(0, 0, 0, 0.25);
+  $clear-gray: hsla(0, 0%, 0%, 0.25);
 
   .now-container {
     display: flex;
@@ -59,6 +60,7 @@
 
     .welcome {
       font-size: 125%;
+      text-align: center;
     }
 
     .schedule-container {

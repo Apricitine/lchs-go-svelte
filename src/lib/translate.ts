@@ -4,7 +4,9 @@ export const languages = {
     calendar: "Calendar",
     settings: "Settings",
     credits: "Credits",
-    greeting1: "Good {timeOfDay}! Today is {schedule}.",
+    greeting1: "Good {timeOfDay}! Today is the {schedule}.",
+    greeting2: "Hi, it's the {timeOfDay} right now. We have the {schedule} today.",
+    greeting3: "Hey, we're in the {timeOfDay}! Today is {schedule}.",
     morning: "Morning",
     afternoon: "Afternoon",
     evening: "Evening",
@@ -15,6 +17,8 @@ export const languages = {
     settings: "opshins",
     credits: "who did dis?",
     greeting1: "haiiii! itz {schedule}.",
+    greeting2: "haiiii! itz {schedule}.",
+    greeting3: "haiiii! itz {schedule}.",
     morning: "mornin",
     afternoon: "midday",
     evening: "nite",
@@ -25,6 +29,7 @@ export const translate = (
   thingToTranslate: keyof typeof languages.english,
   language: keyof typeof languages
 ) => {
+  console.log(languages[language][thingToTranslate])
   return languages[language][thingToTranslate]
 }
 

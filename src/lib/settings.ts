@@ -10,13 +10,20 @@ const defaultSettings = {
   language: "english" as const,
 }
 
-export const getSettings = () => {
-  let settings: typeof defaultSettings
-  let settingsExist = localStorage.getItem("settings") as string
-  if (settingsExist == null) {
-    settings = defaultSettings
-    localStorage.setItem("settings", JSON.stringify(settings))
-    console.log("Existing settings not found, created new settings")
-  } else settings = JSON.parse(localStorage.getItem("settings") as string)
-  return settings as Settings
+let stored: Storage[string] = browser
+  ? localStorage.getItem("settings") ?? JSON.stringify(defaultSettings)
+  : defaultSettings
+
+export const settings: Writable<Settings> = writable(stored)
+settings.subscribe((value) => {
+  if (browser) localStorage.setItem("settings", value.toString())
+})
+
+function updateSetting(setting: keyof Settings, value: any) {
+  ;(settings as Writable<Settings>).update((currentValue) => {
+    return {
+      currentValue,
+      [setting]: value,
+    }
+  })
 }

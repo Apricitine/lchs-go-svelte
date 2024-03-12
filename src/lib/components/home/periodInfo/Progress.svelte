@@ -20,8 +20,8 @@
 
 <style lang="scss">
   $circle-width: 1.25rem;
-  $clear-gray: hsla(0, 0, 0, 0.25);
-  $clear-white: hsla(0, 0, 100%, 0.5);
+  $clear-gray: hsla(0, 0%, 0%, 0.25);
+  $clear-white: hsla(0, 0%, 100%, 0.5);
 
   .progress {
     display: flex;

@@ -1,12 +1,15 @@
 import type dayjs from "dayjs"
 
+type MiddleSchoolDays = keyof typeof days.middleSchool
+type HighSchoolDays = keyof typeof days.highSchool
+
 type Week = {
   sunday: keyof typeof days.noSchool
-  monday: keyof typeof days.middleSchool | keyof typeof days.highSchool
-  tuesday: keyof typeof days.middleSchool | keyof typeof days.highSchool
-  wednesday: keyof typeof days.middleSchool | keyof typeof days.highSchool
-  thursday: keyof typeof days.middleSchool | keyof typeof days.highSchool
-  friday: keyof typeof days.middleSchool | keyof typeof days.highSchool
+  monday: MiddleSchoolDays | HighSchoolDays
+  tuesday: MiddleSchoolDays | HighSchoolDays
+  wednesday: MiddleSchoolDays | HighSchoolDays
+  thursday: MiddleSchoolDays | HighSchoolDays
+  friday: MiddleSchoolDays | HighSchoolDays
   saturday: keyof typeof days.noSchool
 }
 
