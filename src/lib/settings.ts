@@ -3,27 +3,34 @@ import { writable, type Writable } from "svelte/store"
 import { browser } from "$app/environment"
 
 export interface Settings {
+  version: number
   language: Languages
 }
 
-const defaultSettings = {
+const defaultSettings: Settings = {
+  version: 0,
   language: "english" as const,
 }
 
-let stored: Storage[string] = browser
+const stored: string = browser
   ? localStorage.getItem("settings") ?? JSON.stringify(defaultSettings)
-  : defaultSettings
+  : JSON.stringify(defaultSettings)
 
-export const settings: Writable<Settings> = writable(stored)
+export const settings: Writable<typeof defaultSettings> = writable(JSON.parse(stored))
 settings.subscribe((value) => {
-  if (browser) localStorage.setItem("settings", value.toString())
+  if (browser) localStorage.setItem("settings", JSON.stringify(value))
 })
 
-function updateSetting(setting: keyof Settings, value: any) {
-  ;(settings as Writable<Settings>).update((currentValue) => {
+/**
+ * updates a user's setting
+ * @param setting the setting you want to update. must be in the Settings type
+ * @param value the value you want the new type to have
+ */
+export function updateSetting(setting: keyof Settings, value: any) {
+  ;(settings as Writable<Settings>).update((currentValue: Settings) => {
     return {
-      currentValue,
-      [setting]: value,
+      ...currentValue,
+      [setting]: value.toString,
     }
   })
 }

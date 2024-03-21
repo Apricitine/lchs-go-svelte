@@ -27,8 +27,8 @@
 </main>
 
 <style lang="scss">
-  $clear-gray: hsla(0, 0, 0, 0.25);
-  $clear-white: hsla(0, 0, 100%, 0.5);
+  $clear-gray: hsla(0, 0%, 0%, 0.25%);
+  $clear-white: hsla(0, 0%, 100%, 0.5%);
 
   .info {
     width: 100%;

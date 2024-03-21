@@ -29,7 +29,6 @@ export const translate = (
   thingToTranslate: keyof typeof languages.english,
   language: keyof typeof languages
 ) => {
-  console.log(languages[language][thingToTranslate])
   return languages[language][thingToTranslate]
 }
 

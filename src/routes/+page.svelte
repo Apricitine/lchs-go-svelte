@@ -10,8 +10,9 @@
   import dayjs from "dayjs"
   import { type Settings } from "$lib/settings"
   import { randomPick } from "$lib/utilities"
-  import { settings } from "$lib/settings"
+  import { settings, updateSetting } from "$lib/settings"
   import { browser } from "$app/environment"
+
 
   const schedule = "Regular Schedule"
   let greeting: string
@@ -23,21 +24,23 @@
     else return translate("evening", language)
   }
 
-  console.log($settings)
-
-  greeting = interpolateTranslation(
-    translate(randomPick(["greeting1", "greeting2", "greeting3"]), $settings.language),
-    {
-      timeOfDay: getTimeOfDayGreeting($settings.language).toLowerCase(),
-      schedule: schedule.toLowerCase(),
-    }
-  )
-
+  setInterval(() => {
+    if (browser) console.log($settings)
+  }, 1000)
 </script>
 
 <div class="now-container">
   <h1 class="welcome">
-    {greeting}
+    {(greeting = interpolateTranslation(
+      translate(
+        randomPick(["greeting1", "greeting2", "greeting3"]),
+        $settings.language
+      ),
+      {
+        timeOfDay: getTimeOfDayGreeting($settings.language).toLowerCase(),
+        schedule: schedule.toLowerCase(),
+      }
+    ))}
   </h1>
   <main class="schedule-container">
     <div class="period-info">
