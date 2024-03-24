@@ -24,9 +24,6 @@
     else return translate("evening", language)
   }
 
-  setInterval(() => {
-    if (browser) console.log($settings)
-  }, 1000)
 </script>
 
 <div class="now-container">
