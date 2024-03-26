@@ -1,9 +1,14 @@
-<script>
+<script lang="ts">
   import Footer from "$lib/components/Footer.svelte"
   import Nav from "$lib/components/Nav.svelte"
+  import { settings } from "$lib/settings"
+  import { themes } from "$lib/themes"
 
   let timeUntilNext = "[timeUntilNext]"
 
+  function applyTheme(): string {
+    return `background: linear-gradient(to bottom, ${themes[$settings.theme].colors[0]}, ${themes[$settings.theme].colors[1]})`
+  }
 </script>
 
 <svelte:head>
@@ -41,7 +46,7 @@
   <div class="slot">
     <slot />
   </div>
-  <div class="background" />
+  <div class="background" style={applyTheme()} />
   <Footer />
 </main>
 
@@ -60,8 +65,22 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: #466272;
-    transition: background-color ease-in-out;
+    background-size: 400% 400%;
+    animation: AnimatedTheme 20s ease infinite;
+  }
+
+  @keyframes AnimatedTheme {
+    0% {
+      background-position: 50% 0%;
+    }
+
+    50% {
+      background-position: 51% 100%;
+    }
+
+    100% {
+      background-position: 50% 0%;
+    }
   }
 
   div.slot {

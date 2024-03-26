@@ -10,6 +10,13 @@ export const languages = {
     morning: "Morning",
     afternoon: "Afternoon",
     evening: "Evening",
+    theme: "Theme",
+    themeDescription: "The background theme of the app",
+    language: "Language",
+    languageDescription: "The background theme of the app",
+    footerMessage: "Made with ❤️ by the LCiTeam",
+    footerBugReport: "Report a bug",
+    footerInstallExtension: "Install the extension",
   },
   goofy: {
     home: "hom",
@@ -22,6 +29,13 @@ export const languages = {
     morning: "mornin",
     afternoon: "midday",
     evening: "nite",
+    theme: "Theme",
+    themeDescription: "oooo pwetty cowors~",
+    language: "lanwaj",
+    languageDescription: "I will exterminate you if you change this.",
+    footerMessage: "wuv u all ❤️ - lciteam",
+    footerBugReport: "uh oh buggies",
+    footerInstallExtension: "dowload ekstenshun",
   },
 } as const
 

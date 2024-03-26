@@ -1,8 +1,13 @@
+<script lang="ts">
+  import { translate } from "$lib/translate"
+  import { settings } from "$lib/settings"
+</script>
+
 <footer>
-  <span> Made with ❤️ by the LCiTeam </span>
+  <span> {translate("footerMessage", $settings.language)} </span>
   <span>
     <a href="https://forms.gle/BgFW4MgL9RGpezdw7" target="_blank">
-      Report a bug
+      {translate("footerBugReport", $settings.language)}
     </a>
   </span>
   <span>
@@ -10,7 +15,7 @@
       href="https://chromewebstore.google.com/detail/lchs-go/bddnpkadgjcbafnmbampfbaiijafealk"
       target="_blank"
     >
-      Install the extension
+    {translate("footerInstallExtension", $settings.language)}
     </a>
   </span>
 </footer>

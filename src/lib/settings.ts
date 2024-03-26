@@ -6,11 +6,13 @@ import { browser } from "$app/environment"
 export interface Settings {
   version: number
   language: Languages
+  theme: keyof typeof themes
 }
 
 const defaultSettings: Settings = {
-  version: 0,
+  version: 1,
   language: "english" as const,
+  theme: "softBlue" as const
 }
 
 const stored: string = browser
