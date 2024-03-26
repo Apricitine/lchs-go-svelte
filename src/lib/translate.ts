@@ -17,6 +17,10 @@ export const languages = {
     footerMessage: "Made with ❤️ by the LCiTeam",
     footerBugReport: "Report a bug",
     footerInstallExtension: "Install the extension",
+    softBlue: "Soft Blue",
+    scarletSunrise: "Scarlet Sunrise",
+    english: "English",
+    goofy: "Goofy",
   },
   goofy: {
     home: "hom",
@@ -36,6 +40,10 @@ export const languages = {
     footerMessage: "wuv u all ❤️ - lciteam",
     footerBugReport: "uh oh buggies",
     footerInstallExtension: "dowload ekstenshun",
+    softBlue: "blew uwu",
+    scarletSunrise: "oooo soo pwety",
+    english: "ewww language",
+    goofy: "DA BEST",
   },
 } as const
 

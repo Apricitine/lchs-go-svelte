@@ -3,12 +3,22 @@
   import Nav from "$lib/components/Nav.svelte"
   import { settings } from "$lib/settings"
   import { themes } from "$lib/themes"
+  import { onMount } from "svelte"
+  import { writable } from "svelte/store"
 
   let timeUntilNext = "[timeUntilNext]"
+  let themeStyles = writable("")
 
   function applyTheme(): string {
+    console.log("Applying theme", themes[$settings.theme].colors[0], themes[$settings.theme].colors[1])
     return `background: linear-gradient(to bottom, ${themes[$settings.theme].colors[0]}, ${themes[$settings.theme].colors[1]})`
   }
+
+  $: $settings, $themeStyles = applyTheme()
+
+  onMount(() => {
+    $themeStyles = applyTheme()
+  })
 </script>
 
 <svelte:head>
@@ -46,7 +56,7 @@
   <div class="slot">
     <slot />
   </div>
-  <div class="background" style={applyTheme()} />
+  <div class="background" style={$themeStyles} />
   <Footer />
 </main>
 
@@ -66,10 +76,10 @@
     width: 100vw;
     height: 100vh;
     background-size: 400% 400%;
-    animation: AnimatedTheme 20s ease infinite;
+    animation: animated-background 20s ease infinite;
   }
 
-  @keyframes AnimatedTheme {
+  @keyframes animated-background {
     0% {
       background-position: 50% 0%;
     }

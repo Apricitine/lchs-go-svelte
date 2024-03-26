@@ -24,7 +24,7 @@
       title: translate("language", $settings.language),
       description: translate("languageDescription", $settings.language),
       type: "dropdown",
-      options: ["hi", "heiii"],
+      options: ["english", "goofy"],
     },
   }
 

@@ -15,8 +15,7 @@
   {#if type === "dropdown"}
     <select>
       {#each options as option}
-        <option>{translate(option, $settings.language)}</option>
-        option
+        <option on:click={()=>{}}>{translate(option, $settings.language)}</option>
       {/each}
     </select>
   {:else}
