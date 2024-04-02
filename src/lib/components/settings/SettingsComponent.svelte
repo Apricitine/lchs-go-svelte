@@ -1,6 +1,6 @@
 <script lang="ts">
   import { translate } from "$lib/translate"
-  import { settings, updateSetting } from "$lib/settings"
+  import { settings, updateSetting, type Settings } from "$lib/settings"
   import { themes } from "$lib/themes"
 
   type FunctionOptionAs<T extends (...args: any) => any> = (
@@ -15,6 +15,8 @@
     | Parameters<typeof updateSetting>[1]
   )[]
 
+  let goodTitle = title.toLowerCase() as unknown as keyof Settings
+
   /*  these methods are necessary to make <options> at least somewhat 
   type-safe, as "as" notation along with all typescript notation is 
   not allowed inside Svelte component markup */
@@ -24,18 +26,17 @@
   const getOptionAsUpdateSetting: FunctionOptionAs<typeof updateSetting> = (
     option: (typeof options)[0]
   ) => option as Parameters<typeof updateSetting>[1]
+
+  let selection: any
+  
 </script>
 
 <section>
   <h2>{title} <span>- {description}</span></h2>
   {#if type === "dropdown"}
-    <select>
+    <select bind:value={selection} on:change={() => {updateSetting(goodTitle, selection)}}>
       {#each options as option}
-        <option
-          on:click={() =>
-            updateSetting("language", getOptionAsUpdateSetting(option))}
-          >{translate(getOptionAsTranslate(option), $settings.language)}</option
-        >
+        <option value={option}>{translate(getOptionAsTranslate(option), $settings.language)}</option>
       {/each}
     </select>
   {:else}
@@ -61,6 +62,10 @@
     border-radius: 4px;
     margin-bottom: 0.5rem;
     width: 100%;
+
+    select {
+      background: 0;
+    }
 
     span:nth-child(2) {
       background: hsla(0, 0%, 0%, 0.125);

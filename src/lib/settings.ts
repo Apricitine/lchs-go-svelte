@@ -33,6 +33,7 @@ export const settings: Writable<typeof defaultSettings> =
 settings.subscribe((value) => {
   if (browser) localStorage.setItem("settings", JSON.stringify(value))
   console.group("Value of settings store changed to:", value)
+  console.groupEnd()
 })
 
 /**
@@ -46,12 +47,12 @@ export function updateSetting<T extends Settings, K extends keyof T>(
 ): void {
   if (typeof value !== typeof defaultSettings[setting])
     throw new Error(
-      "TypeError: type mismatch between value and setting at updateSetting()"
+      `TypeError: type mismatch between value and setting at updateSetting(): between ${typeof value} and ${typeof defaultSettings[setting]}`
     )
   ;(settings as Writable<Settings>).update((currentValue: Settings) => {
     return {
       ...currentValue,
-      [setting]: (value as string).toString(),
+      [setting.toLowerCase()]: (value as string).toString(),
     }
   })
 }

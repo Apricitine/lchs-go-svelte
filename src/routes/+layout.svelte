@@ -10,11 +10,6 @@
   let themeStyles = writable("")
 
   function applyTheme(): string {
-    console.log(
-      "Applying theme",
-      themes[$settings.theme][0],
-      themes[$settings.theme][1]
-    )
     return `background: linear-gradient(to bottom, ${themes[$settings.theme][0]}, ${themes[$settings.theme][1]})`
   }
 
