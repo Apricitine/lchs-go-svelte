@@ -1,12 +1,29 @@
 <script lang="ts">
   import { translate } from "$lib/translate"
   import { settings, updateSetting } from "$lib/settings"
-  import { derived } from "svelte/store"
+  import { themes } from "$lib/themes"
+
+  type FunctionOptionAs<T extends (...args: any) => any> = (
+    option: (typeof options)[0]
+  ) => Parameters<T>[1]
 
   export let title: string
   export let description: string
-  export let type: "dropdown" | "options" 
-  export let options: any[]
+  export let type: "dropdown" | "options"
+  export let options: (
+    | Parameters<typeof translate>[1]
+    | Parameters<typeof updateSetting>[1]
+  )[]
+
+  /*  these methods are necessary to make <options> at least somewhat 
+  type-safe, as "as" notation along with all typescript notation is 
+  not allowed inside Svelte component markup */
+  const getOptionAsTranslate: FunctionOptionAs<typeof translate> = (
+    option: (typeof options)[0]
+  ) => option as Parameters<typeof translate>[1]
+  const getOptionAsUpdateSetting: FunctionOptionAs<typeof updateSetting> = (
+    option: (typeof options)[0]
+  ) => option as Parameters<typeof updateSetting>[1]
 
 </script>
 
@@ -15,13 +32,19 @@
   {#if type === "dropdown"}
     <select>
       {#each options as option}
-        <option on:click={()=>{}}>{translate(option, $settings.language)}</option>
+        <option
+          on:click={() =>
+            updateSetting("language", getOptionAsUpdateSetting(option))}
+          >{translate(getOptionAsTranslate(option), $settings.language)}</option
+        >
       {/each}
     </select>
   {:else}
     {#each options as option}
-      <button on:click={() => updateSetting("theme", option)}
-        >{translate(option, $settings.language)}</button
+      <button
+        on:click={() =>
+          updateSetting("theme", getOptionAsUpdateSetting(option))}
+        >{translate(getOptionAsTranslate(option), $settings.language)}</button
       >
     {/each}
   {/if}

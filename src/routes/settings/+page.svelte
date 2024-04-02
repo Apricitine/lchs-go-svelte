@@ -1,17 +1,18 @@
 <script lang="ts">
   import SettingsComponent from "$lib/components/settings/SettingsComponent.svelte"
-  import type { Settings } from "$lib/settings"
+  import type { Settings, updateSetting } from "$lib/settings"
   import { translate } from "$lib/translate"
   import { settings } from "$lib/settings"
-  import { themes } from "$lib/themes"
-  import { languages } from "$lib/translate"
 
   export const settingsList: {
     [key in keyof Omit<Settings, "version">]: {
       title: ReturnType<typeof translate>
       description: ReturnType<typeof translate>
       type: "dropdown" | "options"
-      options: string[]
+      options: (
+        | Parameters<typeof translate>[1]
+        | Parameters<typeof updateSetting>[1]
+      )[]
     }
   } = {
     theme: {
@@ -26,10 +27,6 @@
       type: "dropdown",
       options: ["english", "goofy"],
     },
-  }
-
-  for (const thing of settingsList.language.options) {
-    console.log(thing)
   }
 </script>
 
