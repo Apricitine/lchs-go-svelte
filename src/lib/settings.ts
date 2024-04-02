@@ -49,10 +49,6 @@ export function updateSetting<T extends Settings, K extends keyof T>(
       "TypeError: type mismatch between value and setting at updateSetting()"
     )
   ;(settings as Writable<Settings>).update((currentValue: Settings) => {
-    console.group({
-      ...currentValue,
-      [setting]: (value as string).toString(),
-    })
     return {
       ...currentValue,
       [setting]: (value as string).toString(),

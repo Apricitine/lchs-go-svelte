@@ -10,11 +10,15 @@
   let themeStyles = writable("")
 
   function applyTheme(): string {
-    console.log("Applying theme", themes[$settings.theme][0], themes[$settings.theme][1])
+    console.log(
+      "Applying theme",
+      themes[$settings.theme][0],
+      themes[$settings.theme][1]
+    )
     return `background: linear-gradient(to bottom, ${themes[$settings.theme][0]}, ${themes[$settings.theme][1]})`
   }
 
-  $: $settings, $themeStyles = applyTheme()
+  $: $settings, ($themeStyles = applyTheme())
 
   onMount(() => {
     $themeStyles = applyTheme()
@@ -61,6 +65,16 @@
 </main>
 
 <style lang="scss">
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    color: inherit;
+    font-family: inherit;
+  }
+
   main {
     font-family: "Niramit", sans-serif;
     color: #fff;

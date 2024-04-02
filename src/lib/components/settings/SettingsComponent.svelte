@@ -24,7 +24,6 @@
   const getOptionAsUpdateSetting: FunctionOptionAs<typeof updateSetting> = (
     option: (typeof options)[0]
   ) => option as Parameters<typeof updateSetting>[1]
-
 </script>
 
 <section>
@@ -40,13 +39,18 @@
       {/each}
     </select>
   {:else}
-    {#each options as option}
-      <button
-        on:click={() =>
-          updateSetting("theme", getOptionAsUpdateSetting(option))}
-        >{translate(getOptionAsTranslate(option), $settings.language)}</button
-      >
-    {/each}
+    <span>
+      {#each options as option}
+        <button
+          style={$settings.theme === getOptionAsUpdateSetting(option)
+            ? "background: hsla(0, 0%, 0%, 0.125)"
+            : ""}
+          on:click={() =>
+            updateSetting("theme", getOptionAsUpdateSetting(option))}
+          >{translate(getOptionAsTranslate(option), $settings.language)}</button
+        >
+      {/each}
+    </span>
   {/if}
 </section>
 
@@ -57,6 +61,29 @@
     border-radius: 4px;
     margin-bottom: 0.5rem;
     width: 100%;
+
+    span:nth-child(2) {
+      background: hsla(0, 0%, 0%, 0.125);
+      display: inline-block;
+      padding: 0.5rem;
+      border-radius: 2px;
+
+      button {
+        background: 0;
+        padding: 0.5rem;
+        border: none;
+        transition: all 100ms ease-in-out;
+        border-radius: 2px;
+
+        &:not(:first-of-type) {
+          margin-left: 0.5rem;
+        }
+
+        &:hover {
+          background: hsla(0, 0%, 0%, 0.125);
+        }
+      }
+    }
   }
   h2 {
     font-size: 1.24rem;

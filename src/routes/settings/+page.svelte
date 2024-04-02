@@ -1,6 +1,6 @@
 <script lang="ts">
   import SettingsComponent from "$lib/components/settings/SettingsComponent.svelte"
-  import type { Settings, updateSetting } from "$lib/settings"
+  import { updateSetting, type Settings } from "$lib/settings"
   import { translate } from "$lib/translate"
   import { settings } from "$lib/settings"
 
@@ -28,6 +28,7 @@
       options: ["english", "goofy"],
     },
   }
+
 </script>
 
 <main>

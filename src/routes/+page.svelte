@@ -24,7 +24,6 @@
     else return translate("evening", language)
   }
 
-  updateSetting("theme", "softBlue")
 </script>
 
 <div class="now-container">
