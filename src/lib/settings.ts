@@ -12,7 +12,7 @@ export interface Settings {
 const defaultSettings: Settings = {
   version: 1,
   language: "english",
-  theme: "softBlue",
+  theme: "softBlue"
 }
 
 const stored: string = browser

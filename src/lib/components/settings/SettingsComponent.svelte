@@ -7,6 +7,8 @@
     option: (typeof options)[0]
   ) => Parameters<T>[1]
 
+  export let shouldReload: boolean
+  export let name: keyof Settings
   export let title: string
   export let description: string
   export let type: "dropdown" | "options"
@@ -14,8 +16,6 @@
     | Parameters<typeof translate>[1]
     | Parameters<typeof updateSetting>[1]
   )[]
-
-  let goodTitle = title.toLowerCase() as unknown as keyof Settings
 
   /*  these methods are necessary to make <options> at least somewhat 
   type-safe, as "as" notation along with all typescript notation is 
@@ -27,27 +27,36 @@
     option: (typeof options)[0]
   ) => option as Parameters<typeof updateSetting>[1]
 
-  let selection: any
-  
+  let selection = $settings[name]
 </script>
 
 <section>
   <h2>{title} <span>- {description}</span></h2>
   {#if type === "dropdown"}
-    <select bind:value={selection} on:change={() => {updateSetting(goodTitle, selection)}}>
+    <select
+      bind:value={selection}
+      on:change={() => {
+        updateSetting(name, selection)
+        if (shouldReload) location.reload()
+      }}
+    >
       {#each options as option}
-        <option value={option}>{translate(getOptionAsTranslate(option), $settings.language)}</option>
+        <option value={option}
+          >{translate(getOptionAsTranslate(option), $settings.language)}</option
+        >
       {/each}
     </select>
   {:else}
     <span>
       {#each options as option}
         <button
-          style={$settings.theme === getOptionAsUpdateSetting(option)
+          style={$settings[name] === getOptionAsUpdateSetting(option)
             ? "background: hsla(0, 0%, 0%, 0.125)"
             : ""}
-          on:click={() =>
-            updateSetting("theme", getOptionAsUpdateSetting(option))}
+          on:click={() => {
+            updateSetting(name, getOptionAsUpdateSetting(option))
+            if (shouldReload) location.reload()
+          }}
           >{translate(getOptionAsTranslate(option), $settings.language)}</button
         >
       {/each}
@@ -64,7 +73,20 @@
     width: 100%;
 
     select {
-      background: 0;
+      padding: 0.75rem;
+      background: hsla(0, 0%, 0%, 0.125);
+      border: none;
+      appearance: none;
+      border-radius: 2px;
+      outline: none;
+      
+      &:hover {
+        cursor: pointer;
+      }
+
+      option {
+        border-radius: 2px;
+      }
     }
 
     span:nth-child(2) {
@@ -86,6 +108,7 @@
 
         &:hover {
           background: hsla(0, 0%, 0%, 0.125);
+          cursor: pointer;
         }
       }
     }

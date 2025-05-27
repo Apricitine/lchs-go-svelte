@@ -1,6 +1,7 @@
 <script>
   import { page } from "$app/stores"
   import routes from "$lib/routes"
+  import { settings } from "$lib/settings"
   import { translate } from "$lib/translate"
 </script>
 
@@ -13,7 +14,7 @@
           ? "home"
           : $page.url.pathname.slice(1)) === `${route.name}`
           ? "selected"
-          : ""}>{translate(route.name, "english")}</a
+          : ""}>{$settings.language !== "goofy" ? translate(route.name, $settings.language).toUpperCase() : translate(route.name, $settings.language)}</a
       >
     {/each}
   </nav>
@@ -39,7 +40,6 @@
         font-size: 14px;
         font-weight: 300;
         letter-spacing: 1px;
-        text-transform: uppercase;
         cursor: pointer;
 
         &:hover {

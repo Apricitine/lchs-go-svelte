@@ -54,10 +54,10 @@
       place-content: center;
       border-radius: 50%;
       background-color: $clear-gray;
-      backdrop-filter: blur(1000px);
       width: 35px;
       height: 35px;
       position: absolute;
+      backdrop-filter: blur(4px);
 
       span {
         font-size: 11.5px;
