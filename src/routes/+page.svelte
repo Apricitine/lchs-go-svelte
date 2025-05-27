@@ -61,6 +61,7 @@
     .welcome {
       font-size: 125%;
       text-align: center;
+      margin-bottom: 2%;
     }
 
     .schedule-container {

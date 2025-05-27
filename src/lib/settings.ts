@@ -7,12 +7,14 @@ export interface Settings {
   version: number
   language: Languages
   theme: keyof typeof themes
+  grade: 7 | 8 | 9 | 10 | 11 | 12
 }
 
 const defaultSettings: Settings = {
   version: 1,
   language: "english",
-  theme: "softBlue"
+  theme: "softBlue",
+  grade: 9
 }
 
 const stored: string = browser

@@ -19,8 +19,11 @@ export const languages = {
     footerInstallExtension: "Install the extension",
     softBlue: "Soft Blue",
     scarletSunrise: "Scarlet Sunrise",
+    forestGreen: "Forest Green",
     english: "English",
     goofy: "Goofy",
+    grade: "Grade",
+    gradeDescription: "The grade you are in, used to correctly display your schedule"
   },
   goofy: {
     home: "hom",
@@ -42,8 +45,11 @@ export const languages = {
     footerInstallExtension: "dowload ekstenshun",
     softBlue: "blew uwu",
     scarletSunrise: "oooo soo pwety",
+    forestGreen: "fowesty gweeny",
     english: "ewww language",
     goofy: "DA BEST",
+    grade: "gwade",
+    gradeDescription: "bruh update this to your gwade or else"
   },
 } as const
 
@@ -51,7 +57,7 @@ export const translate = (
   thingToTranslate: keyof typeof languages.english,
   language: keyof typeof languages
 ) => {
-  return languages[language][thingToTranslate]
+  return languages[language][thingToTranslate] ? languages[language][thingToTranslate] : "you forgot to translate this stupid"
 }
 
 export const interpolateTranslation = (

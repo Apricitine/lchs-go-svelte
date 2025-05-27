@@ -20,7 +20,7 @@
       title: translate("theme", $settings.language),
       description: translate("themeDescription", $settings.language),
       type: "dropdown",
-      options: ["softBlue", "scarletSunrise"],
+      options: ["softBlue", "scarletSunrise", "forestGreen"],
       shouldReload: false
     },
     language: {
@@ -29,6 +29,13 @@
       type: "options",
       options: ["english", "goofy"],
       shouldReload: true
+    },
+    grade: {
+      title: translate("grade", $settings.language),
+      description: translate("gradeDescription", $settings.language),
+      type: "dropdown",
+      options: [7, 8, 9, 10, 11, 12],
+      shouldReload: false
     },
   }
 
