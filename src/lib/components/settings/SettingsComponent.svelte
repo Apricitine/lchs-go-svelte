@@ -116,6 +116,7 @@
   h2 {
     font-size: 1.24rem;
     font-weight: bold;
+    margin-bottom: 2%;
 
     span {
       font-size: 1rem;
