@@ -12,7 +12,7 @@
   import { randomPick } from "$lib/utilities"
   import { settings, updateSetting } from "$lib/settings"
   import { browser } from "$app/environment"
-
+  import * as time from "$lib/time"
 
   const schedule = "Regular Schedule"
   let greeting: string
@@ -24,6 +24,7 @@
     else return translate("evening", language)
   }
 
+  console.log(time.getSchedule(dayjs(), $settings))
 </script>
 
 <div class="now-container">

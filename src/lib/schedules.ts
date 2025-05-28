@@ -1,17 +1,18 @@
 import type dayjs from "dayjs"
+import { settings } from "$lib/settings"
 
 type MiddleSchoolDays = keyof typeof days.middleSchool
 type HighSchoolDays = keyof typeof days.highSchool
 
-type Week = {
-  sunday: keyof typeof days.noSchool
-  monday: MiddleSchoolDays | HighSchoolDays
-  tuesday: MiddleSchoolDays | HighSchoolDays
-  wednesday: MiddleSchoolDays | HighSchoolDays
-  thursday: MiddleSchoolDays | HighSchoolDays
-  friday: MiddleSchoolDays | HighSchoolDays
-  saturday: keyof typeof days.noSchool
-}
+type Week = [
+  keyof typeof days.noSchool,
+  MiddleSchoolDays | HighSchoolDays,
+  MiddleSchoolDays | HighSchoolDays,
+  MiddleSchoolDays | HighSchoolDays,
+  MiddleSchoolDays | HighSchoolDays,
+  MiddleSchoolDays | HighSchoolDays,
+  keyof typeof days.noSchool
+]
 
 export const days = {
   noSchool: {
@@ -82,13 +83,13 @@ export const days = {
 }
 
 export const weeks: { [key: string]: Week } = {
-  regular: {
-    sunday: "noSchool",
-    monday: "regular",
-    tuesday: "regular",
-    wednesday: "regular",
-    thursday: "regular",
-    friday: "regular",
-    saturday: "noSchool",
-  },
+  regular: [
+    "noSchool",
+    "regular",
+    "regular",
+    "blockOdd",
+    "blockEven",
+    "regular",
+    "noSchool",
+  ]
 }
