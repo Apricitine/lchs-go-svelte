@@ -92,8 +92,8 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList |
             false
           ),
         ] as PeriodList
+      else days.middleSchool[scheduleType]
 
-        
       break
     case "9":
     case "10":
