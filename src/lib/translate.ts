@@ -23,7 +23,13 @@ export const languages = {
     english: "English",
     goofy: "Goofy",
     grade: "Grade",
-    gradeDescription: "The grade you are in, used to correctly display your schedule"
+    gradeDescription: "The grade you are in, used to correctly display your schedule",
+    "7": "7th Grade",
+    "8": "8th Grade",
+    "9": "9th Grade",
+    "10": "10th Grade",
+    "11": "11th Grade",
+    "12": "12th Grade"
   },
   goofy: {
     home: "hom",
@@ -49,7 +55,13 @@ export const languages = {
     english: "ewww language",
     goofy: "DA BEST",
     grade: "gwade",
-    gradeDescription: "bruh update this to your gwade or else"
+    gradeDescription: "bruh update this to your gwade or else",
+    "7": "7th Grade",
+    "8": "8th Grade",
+    "9": "9th Grade",
+    "10": "10th Grade",
+    "11": "11th Grade",
+    "12": "12th Grade"
   },
 } as const
 

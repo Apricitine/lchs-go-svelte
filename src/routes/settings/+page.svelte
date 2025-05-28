@@ -34,7 +34,7 @@
       title: translate("grade", $settings.language),
       description: translate("gradeDescription", $settings.language),
       type: "dropdown",
-      options: [7, 8, 9, 10, 11, 12],
+      options: ["7", "8", "9", "10", "11", "12"],
       shouldReload: false
     },
   }
