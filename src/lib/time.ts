@@ -64,8 +64,8 @@ function period(
   } satisfies Period
 }
 
-export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList | undefined {
-  let schedule: PeriodList | undefined = undefined
+export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList {
+  let schedule: PeriodList
   let scheduleType
 
   schedule = [
@@ -80,7 +80,7 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList |
   switch (settings.grade) {
     case "7":
     case "8":
-      schedule = undefined
+      schedule = []
       scheduleType = weeks.regular[date.day()]
 
       if (scheduleType === "noSchool")
@@ -92,14 +92,16 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList |
             false
           ),
         ] as PeriodList
-      else days.middleSchool[scheduleType]
+      else Object.entries(days.middleSchool[scheduleType]).forEach((p) => {
+        schedule.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), true))
+      })
 
       break
     case "9":
     case "10":
     case "11":
     case "12":
-      schedule = undefined
+      schedule = []
       scheduleType = weeks.regular[date.day()]
 
       if (scheduleType === "noSchool")
@@ -111,6 +113,9 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList |
             false
           ),
         ] as PeriodList
+      else Object.entries(days.middleSchool[scheduleType]).forEach((p) => {
+        schedule.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), true))
+      })
       break
   }
   return schedule
