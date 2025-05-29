@@ -30,6 +30,7 @@
   const scheduleTranslation = Object.keys(schedule)[0] as keyof typeof languages.english
   const daySchedule = schedule[Object.keys(schedule)[0] as keyof typeof schedule] ?? []
 
+  // help help help help
   daySchedule.forEach((p) => {
     if (p.isCurrent(day)) currentPeriod = p
     
