@@ -1,9 +1,11 @@
 import dayjs from "dayjs"
 import isBetween from "dayjs/plugin/isBetween"
+import customParseFormat from "dayjs/plugin/customParseFormat"
 import type { Settings } from "$lib/settings"
 import { days, weeks } from "$lib/schedules"
 
 dayjs.extend(isBetween)
+dayjs.extend(customParseFormat)
 
 /**
  * Type representing all possible days in the schedule, as defined by *schedules.ts*.
@@ -63,12 +65,8 @@ function period(
       return periodEnd.format()
     },
     isCurrent(time: dayjs.Dayjs): boolean {
-      let now = dayjs()
-        .subtract(time.hour(), "hour")
-        .subtract(time.minute(), "minute")
-        .subtract(time.second(), "second")
-      return now.isBetween(this.start, this.end)
-    },
+      return time.isBetween(this.start, this.end)
+    }
   } satisfies Period
 }
 
@@ -121,6 +119,18 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): { [key in Da
           schedule[scheduleType]!.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), false))
           previousPeriodEnd = dayjs(p[1][1], "hh:mm A")
         })
+        schedule[scheduleType]!.unshift(period(
+          "beforeSchool",
+          dayjs("12:00 AM", "hh:mm A"),
+          schedule[scheduleType]![0].start,
+          false
+        ))
+        schedule[scheduleType]!.push(period(
+          "afterSchool",
+          schedule[scheduleType]![schedule[scheduleType]!.length - 1].end,
+          dayjs("11:59 PM", "hh:mm A"),
+          false
+        ))
       }
 
       break

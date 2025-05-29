@@ -23,12 +23,17 @@
     else if (now < 18) return translate("afternoon", language)
     else return translate("evening", language)
   }
+
+  let currentPeriod
   
   const schedule = time.getSchedule(day, $settings)
-
   const scheduleTranslation = Object.keys(schedule)[0] as keyof typeof languages.english
+  const daySchedule = schedule[Object.keys(schedule)[0] as keyof typeof schedule] ?? []
 
-  console.log(schedule)
+  daySchedule.forEach((p) => {
+    if (p.isCurrent(day)) currentPeriod = p
+    
+  })
 </script>
 
 <div class="now-container">
