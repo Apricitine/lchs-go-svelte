@@ -29,7 +29,8 @@ export const languages = {
     "9": "9th Grade",
     "10": "10th Grade",
     "11": "11th Grade",
-    "12": "12th Grade"
+    "12": "12th Grade",
+    passingBeforePeriod3: "Passing Before Period 3",
   },
   goofy: {
     home: "hom",
@@ -61,7 +62,8 @@ export const languages = {
     "9": "9th Grade",
     "10": "10th Grade",
     "11": "11th Grade",
-    "12": "12th Grade"
+    "12": "12th Grade",
+    passingBeforePeriod3: "Passing Before Period 3",
   },
 } as const
 

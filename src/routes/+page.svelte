@@ -23,8 +23,10 @@
     else if (now < 18) return translate("afternoon", language)
     else return translate("evening", language)
   }
-
+  console.time()
   console.log(time.getSchedule(dayjs(), $settings))
+  console.timeEnd()
+  console.timeLog("schedule time")
 </script>
 
 <div class="now-container">

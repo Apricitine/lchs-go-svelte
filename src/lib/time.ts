@@ -67,6 +67,7 @@ function period(
 export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList {
   let schedule: PeriodList
   let scheduleType
+  let previousPeriodEnd: null | dayjs.Dayjs = null
 
   schedule = [
     period(
@@ -93,7 +94,18 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList {
           ),
         ] as PeriodList
       else Object.entries(days.middleSchool[scheduleType]).forEach((p) => {
-        schedule.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), true))
+        if (previousPeriodEnd && p[0] != "break") {
+          schedule.push(
+            period(
+              `passingBefore${(p[0].substring(0, 1).toLocaleUpperCase()).concat(p[0].substring(1))}`,
+              previousPeriodEnd,
+              dayjs(p[1][0], "hh:mm A"),
+              true
+            )
+          )
+        }
+        schedule.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), false))
+        previousPeriodEnd = dayjs(p[1][1], "hh:mm A")
       })
 
       break
@@ -113,8 +125,15 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList {
             false
           ),
         ] as PeriodList
-      else Object.entries(days.middleSchool[scheduleType]).forEach((p) => {
-        schedule.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), true))
+      else Object.entries(days.highSchool[scheduleType]).forEach((p) => {
+        if (previousPeriodEnd && p[0] != "break") {
+          schedule.push(period(
+            `passingBefore${(p[0].substring(0, 1).toLocaleUpperCase()).concat(p[0].substring(1))}`,
+            previousPeriodEnd, dayjs(p[1][0], "hh:mm A"), true
+          ))
+        }
+        schedule.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), false))
+        previousPeriodEnd = dayjs(p[1][1], "hh:mm A")
       })
       break
   }
