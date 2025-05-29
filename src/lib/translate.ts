@@ -30,7 +30,10 @@ export const languages = {
     "10": "10th Grade",
     "11": "11th Grade",
     "12": "12th Grade",
-    passingBeforePeriod3: "Passing Before Period 3",
+    regular: "Regular Schedule",
+    blockOdd: "Block Odd Schedule",
+    blockEven: "Block Even Schedule",
+    noSchool: "No School"
   },
   goofy: {
     home: "hom",
@@ -57,13 +60,17 @@ export const languages = {
     goofy: "DA BEST",
     grade: "gwade",
     gradeDescription: "bruh update this to your gwade or else",
+    /* TODO */
     "7": "7th Grade",
     "8": "8th Grade",
     "9": "9th Grade",
     "10": "10th Grade",
     "11": "11th Grade",
     "12": "12th Grade",
-    passingBeforePeriod3: "Passing Before Period 3",
+    regular: "Regular Schedule",
+    blockOdd: "Block Odd Schedule",
+    blockEven: "Block Even Schedule",
+    noSchool: "No School"
   },
 } as const
 

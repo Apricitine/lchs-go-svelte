@@ -64,28 +64,31 @@ function period(
   } satisfies Period
 }
 
-export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList {
-  let schedule: PeriodList
-  let scheduleType
+export function getSchedule(date: dayjs.Dayjs, settings: Settings): { [key in Days]?: PeriodList } {
+  let schedule: { [key in Days]?: PeriodList }
+  let scheduleType: Days
   let previousPeriodEnd: null | dayjs.Dayjs = null
 
-  schedule = [
-    period(
-      "noSchool",
-      dayjs(days.noSchool.noSchool[0], "hh:mm A"),
-      dayjs(days.noSchool.noSchool[1], "hh:mm A"),
-      false
-    ),
-  ] as PeriodList
+  schedule = {
+    noSchool: [
+      period(
+        "noSchool",
+        dayjs(days.noSchool.noSchool[0], "hh:mm A"),
+        dayjs(days.noSchool.noSchool[1], "hh:mm A"),
+        false
+      ),
+    ] as PeriodList
+  }
 
   switch (settings.grade) {
     case "7":
     case "8":
-      schedule = []
       scheduleType = weeks.regular[date.day()]
+      delete schedule["noSchool"]
+      if (!schedule[scheduleType]) { schedule[scheduleType] = [] }
 
       if (scheduleType === "noSchool")
-        schedule = [
+        schedule.noSchool = [
           period(
             "noSchool",
             dayjs(days.noSchool.noSchool[0], "hh:mm A"),
@@ -93,31 +96,34 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList {
             false
           ),
         ] as PeriodList
-      else Object.entries(days.middleSchool[scheduleType]).forEach((p) => {
-        if (previousPeriodEnd && p[0] != "break") {
-          schedule.push(
-            period(
-              `passingBefore${(p[0].substring(0, 1).toLocaleUpperCase()).concat(p[0].substring(1))}`,
-              previousPeriodEnd,
-              dayjs(p[1][0], "hh:mm A"),
-              true
+      else {
+        Object.entries(days.middleSchool[scheduleType]).forEach((p) => {
+          if (previousPeriodEnd && p[0] != "break") {
+            schedule[scheduleType]!.push(
+              period(
+                `passingBefore${(p[0].substring(0, 1).toLocaleUpperCase()).concat(p[0].substring(1))}`,
+                previousPeriodEnd,
+                dayjs(p[1][0], "hh:mm A"),
+                true
+              )
             )
-          )
-        }
-        schedule.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), false))
-        previousPeriodEnd = dayjs(p[1][1], "hh:mm A")
-      })
+          }
+          schedule[scheduleType]!.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), false))
+          previousPeriodEnd = dayjs(p[1][1], "hh:mm A")
+        })
+      }
 
       break
     case "9":
     case "10":
     case "11":
     case "12":
-      schedule = []
       scheduleType = weeks.regular[date.day()]
+      delete schedule["noSchool"]
+      if (!schedule[scheduleType]) schedule[scheduleType] = []
 
       if (scheduleType === "noSchool")
-        schedule = [
+        schedule[scheduleType] = [
           period(
             "noSchool",
             dayjs(days.noSchool.noSchool[0], "hh:mm A"),
@@ -127,12 +133,12 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): PeriodList {
         ] as PeriodList
       else Object.entries(days.highSchool[scheduleType]).forEach((p) => {
         if (previousPeriodEnd && p[0] != "break") {
-          schedule.push(period(
+          schedule[scheduleType]!.push(period(
             `passingBefore${(p[0].substring(0, 1).toLocaleUpperCase()).concat(p[0].substring(1))}`,
             previousPeriodEnd, dayjs(p[1][0], "hh:mm A"), true
           ))
         }
-        schedule.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), false))
+        schedule[scheduleType]!.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), false))
         previousPeriodEnd = dayjs(p[1][1], "hh:mm A")
       })
       break

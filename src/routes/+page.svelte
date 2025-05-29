@@ -14,19 +14,21 @@
   import { browser } from "$app/environment"
   import * as time from "$lib/time"
 
-  const schedule = "Regular Schedule"
   let greeting: string
+  let day = dayjs()
 
   const getTimeOfDayGreeting = (language: Languages) => {
-    const now = dayjs().hour()
+    const now = day.hour()
     if (now < 12) return translate("morning", language)
     else if (now < 18) return translate("afternoon", language)
     else return translate("evening", language)
   }
-  console.time()
-  console.log(time.getSchedule(dayjs(), $settings))
-  console.timeEnd()
-  console.timeLog("schedule time")
+  
+  const schedule = time.getSchedule(day, $settings)
+
+  const scheduleTranslation = Object.keys(schedule)[0] as keyof typeof languages.english
+
+  console.log(schedule)
 </script>
 
 <div class="now-container">
@@ -38,7 +40,7 @@
       ),
       {
         timeOfDay: getTimeOfDayGreeting($settings.language).toLowerCase(),
-        schedule: schedule.toLowerCase(),
+        schedule: translate(scheduleTranslation, $settings.language).toLocaleLowerCase()
       }
     ))}
   </h1>
