@@ -24,7 +24,7 @@
     else return translate("evening", language)
   }
 
-  let currentPeriod
+  let currentPeriod: time.Period
   
   const schedule = time.getSchedule(day, $settings)
   const scheduleTranslation = Object.keys(schedule)[0] as keyof typeof languages.english
@@ -33,7 +33,6 @@
   // help help help help
   daySchedule.forEach((p) => {
     if (p.isCurrent(day)) currentPeriod = p
-    
   })
 </script>
 
@@ -53,7 +52,7 @@
   <main class="schedule-container">
     <div class="period-info">
       <Progress />
-      <Info />
+      <Info periodStart={currentPeriod.getStart()} periodEnd={currentPeriod.getEnd()} periodName={currentPeriod.name} timeLeft={10} percentCompleted={10}/>
     </div>
     <div class="all-periods">ff</div>
   </main>

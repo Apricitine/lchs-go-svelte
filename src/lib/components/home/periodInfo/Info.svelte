@@ -1,11 +1,11 @@
 <script lang="ts">
   
 
-  let periodStart = "[periodStart]"
-  let periodEnd = "[periodEnd]"
-  let periodName = "[periodName]"
-  let timeLeft = "[timeLeft]"
-  let percentCompleted = "[percentCompleted]"
+  export let periodStart
+  export let periodEnd
+  export let periodName
+  export let timeLeft
+  export let percentCompleted
 </script>
 
 <main class="info">
