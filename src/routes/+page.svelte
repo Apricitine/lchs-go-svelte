@@ -39,9 +39,9 @@
     if (p.isCurrent(day)) currentPeriod = p
   })
 
-  let secondsLeft = currentPeriod.end.diff(day, "seconds")
-  let minutesLeft = Math.round(secondsLeft / 60)
-  let percentCompleted = Math.round((secondsLeft / currentPeriod.end.diff(currentPeriod.start, "seconds")) * 100)
+  $: secondsLeft = currentPeriod.end.diff(day, "seconds")
+  $: minutesLeft = Math.round(secondsLeft / 60)
+  $: percentCompleted = Math.round(100 - (secondsLeft / currentPeriod.end.diff(currentPeriod.start, "seconds")) * 100)
 
 </script>
 
