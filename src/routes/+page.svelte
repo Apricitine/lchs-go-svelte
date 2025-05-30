@@ -16,6 +16,7 @@
 
   let greeting: string
   let day = dayjs()
+  const format = "h:mm"
 
   const getTimeOfDayGreeting = (language: Languages) => {
     const now = day.hour()
@@ -24,16 +25,24 @@
     else return translate("evening", language)
   }
 
-  let currentPeriod: time.Period
-  
+  let currentPeriod: time.Period = time.period("", dayjs(), dayjs(), false)
+
   const schedule = time.getSchedule(day, $settings)
-  const scheduleTranslation = Object.keys(schedule)[0] as keyof typeof languages.english
-  const daySchedule = schedule[Object.keys(schedule)[0] as keyof typeof schedule] ?? []
+  const scheduleTranslation = Object.keys(
+    schedule
+  )[0] as keyof typeof languages.english
+  const daySchedule =
+    schedule[Object.keys(schedule)[0] as keyof typeof schedule] ?? []
 
   // help help help help
   daySchedule.forEach((p) => {
     if (p.isCurrent(day)) currentPeriod = p
   })
+
+  let secondsLeft = currentPeriod.end.diff(day, "seconds")
+  let minutesLeft = Math.round(secondsLeft / 60)
+  let percentCompleted = Math.round((secondsLeft / currentPeriod.end.diff(currentPeriod.start, "seconds")) * 100)
+
 </script>
 
 <div class="now-container">
@@ -45,14 +54,23 @@
       ),
       {
         timeOfDay: getTimeOfDayGreeting($settings.language).toLowerCase(),
-        schedule: translate(scheduleTranslation, $settings.language).toLocaleLowerCase()
+        schedule: translate(
+          scheduleTranslation,
+          $settings.language
+        ).toLocaleLowerCase(),
       }
     ))}
   </h1>
   <main class="schedule-container">
     <div class="period-info">
       <Progress />
-      <Info periodStart={currentPeriod.getStart()} periodEnd={currentPeriod.getEnd()} periodName={currentPeriod.name} timeLeft={10} percentCompleted={10}/>
+      <Info
+        periodStart={currentPeriod.start.format(format)}
+        periodEnd={currentPeriod.end.format(format)}
+        periodName={currentPeriod.name}
+        timeLeft={minutesLeft}
+        percentCompleted={percentCompleted}
+      />
     </div>
     <div class="all-periods">ff</div>
   </main>

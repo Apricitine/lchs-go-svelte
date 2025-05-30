@@ -4,8 +4,10 @@ import customParseFormat from "dayjs/plugin/customParseFormat"
 import type { Settings } from "$lib/settings"
 import { days, weeks } from "$lib/schedules"
 
+
 dayjs.extend(isBetween)
 dayjs.extend(customParseFormat)
+
 
 /**
  * Type representing all possible days in the schedule, as defined by *schedules.ts*.
@@ -14,6 +16,7 @@ type Days =
   | Exclude<keyof typeof days, "middleSchool" | "highSchool">
   | keyof typeof days.middleSchool
   | keyof typeof days.highSchool
+
 
 /**
  * Type representing a single period in the schedule, with various properties and methods to be referred to.
@@ -30,11 +33,10 @@ export interface Period {
   start: dayjs.Dayjs
   end: dayjs.Dayjs
   passing: boolean
-  getStart(): string
-  getEnd(): string
   isCurrent(time: dayjs.Dayjs): boolean
 }
 export type PeriodList = Period[]
+
 
 /**
  * Creates a period component to represent a single period in a schedule for the now page with the period list component.
@@ -44,7 +46,7 @@ export type PeriodList = Period[]
  * @param passing a boolean indicating whether the period is a passing period or not
  * @returns an object of type `Period`
  */
-function period(
+export function period(
   name: string,
   start: dayjs.Dayjs,
   end: dayjs.Dayjs,
@@ -53,22 +55,18 @@ function period(
   let periodStart = dayjs(start, "hh:mm A")
   let periodEnd = dayjs(end, "hh:mm A")
 
+
   return {
     name: name,
     start: periodStart,
     end: periodEnd,
     passing: passing,
-    getStart(): string {
-      return periodStart.format()
-    },
-    getEnd(): string {
-      return periodEnd.format()
-    },
     isCurrent(time: dayjs.Dayjs): boolean {
       return time.isBetween(this.start, this.end)
     }
   } satisfies Period
 }
+
 
 /**
  * A very important function that returns the schedule for the current date based on the grade level specified in the settings among other options.
@@ -81,6 +79,7 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): { [key in Da
   let scheduleType: Days
   let previousPeriodEnd: null | dayjs.Dayjs = null
 
+
   schedule = {
     noSchool: [
       period(
@@ -92,12 +91,14 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): { [key in Da
     ] as PeriodList
   }
 
+
   switch (settings.grade) {
     case "7":
     case "8":
       scheduleType = weeks.regular[date.day()]
       delete schedule["noSchool"]
       if (!schedule[scheduleType]) { schedule[scheduleType] = [] }
+
 
       if (scheduleType === "noSchool")
         schedule.noSchool = [
@@ -113,7 +114,7 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): { [key in Da
           if (previousPeriodEnd && p[0] != "break") {
             schedule[scheduleType]!.push(period(
               `passingBefore${(p[0].substring(0, 1).toLocaleUpperCase()).concat(p[0].substring(1))}`,
-              previousPeriodEnd,dayjs(p[1][0], "hh:mm A"), true
+              previousPeriodEnd, dayjs(p[1][0], "hh:mm A"), true
             ))
           }
           schedule[scheduleType]!.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), false))
@@ -133,6 +134,7 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): { [key in Da
         ))
       }
 
+
       break
     case "9":
     case "10":
@@ -141,6 +143,7 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): { [key in Da
       scheduleType = weeks.regular[date.day()]
       delete schedule["noSchool"]
       if (!schedule[scheduleType]) schedule[scheduleType] = []
+
 
       if (scheduleType === "noSchool")
         schedule[scheduleType] = [
@@ -151,17 +154,36 @@ export function getSchedule(date: dayjs.Dayjs, settings: Settings): { [key in Da
             false
           ),
         ] as PeriodList
-      else Object.entries(days.highSchool[scheduleType]).forEach((p) => {
-        if (previousPeriodEnd && p[0] != "break") {
-          schedule[scheduleType]!.push(period(
-            `passingBefore${(p[0].substring(0, 1).toLocaleUpperCase()).concat(p[0].substring(1))}`,
-            previousPeriodEnd, dayjs(p[1][0], "hh:mm A"), true
-          ))
-        }
-        schedule[scheduleType]!.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), false))
-        previousPeriodEnd = dayjs(p[1][1], "hh:mm A")
-      })
+      else {
+        Object.entries(days.highSchool[scheduleType]).forEach((p) => {
+          if (previousPeriodEnd && p[0] != "break") {
+            schedule[scheduleType]!.push(period(
+              `passingBefore${(p[0].substring(0, 1).toLocaleUpperCase()).concat(p[0].substring(1))}`,
+              previousPeriodEnd, dayjs(p[1][0], "hh:mm A"), true
+            ))
+          }
+          schedule[scheduleType]!.push(period(p[0], dayjs(p[1][0], "hh:mm A"), dayjs(p[1][1], "hh:mm A"), false))
+          previousPeriodEnd = dayjs(p[1][1], "hh:mm A")
+        })
+        schedule[scheduleType]!.unshift(period(
+          "beforeSchool",
+          dayjs("12:00 AM", "hh:mm A"),
+          schedule[scheduleType]![0].start,
+          false
+        ))
+        schedule[scheduleType]!.push(period(
+          "afterSchool",
+          schedule[scheduleType]![schedule[scheduleType]!.length - 1].end,
+          dayjs("11:59 PM", "hh:mm A"),
+          false
+        ))
+      }
+
+
       break
   }
   return schedule
 }
+
+
+
