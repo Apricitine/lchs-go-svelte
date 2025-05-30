@@ -1,12 +1,10 @@
 <script lang="ts">
   import dayjs from "dayjs"
 
-  let circleProgress: number = 50
+  export let circleProgress: number
 
-  let now: string = dayjs().format("hh:mm")
-  setInterval(() => {
-    now = dayjs().format("hh:mm")
-  }, 1000)
+  export let now: string
+
 </script>
 
 <div class="progress">
