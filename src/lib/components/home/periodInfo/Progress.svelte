@@ -1,9 +1,8 @@
 <script lang="ts">
   import dayjs from "dayjs"
 
-  export let circleProgress: number
-
-  export let now: string
+  let { circleProgress, now }: { circleProgress: number; now: string } =
+    $props()
 
 </script>
 

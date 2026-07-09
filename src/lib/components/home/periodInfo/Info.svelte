@@ -1,11 +1,8 @@
 <script lang="ts">
   
 
-  export let periodStart
-  export let periodEnd
-  export let periodName
-  export let timeLeft
-  export let percentCompleted
+  let { periodStart, periodEnd, periodName, timeLeft, percentCompleted } =
+    $props()
 </script>
 
 <main class="info">

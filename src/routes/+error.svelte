@@ -1,13 +1,13 @@
 <script lang="ts">
-  import { page } from "$app/stores"
+  import { page } from "$app/state"
 </script>
 
 <h1>
   Something is broken :( <br>
   If you're a developer, you suck. <br>
   <section>
-    error code: {$page.status} <br>
-    error message: {$page.error?.message}
+    error code: {page.status} <br>
+    error message: {page.error?.message}
   </section>
 </h1>
 

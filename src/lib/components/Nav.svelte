@@ -1,5 +1,5 @@
-<script>
-  import { page } from "$app/stores"
+<script lang="ts">
+  import { page } from "$app/state"
   import routes from "$lib/routes"
   import { settings } from "$lib/settings"
   import { translate } from "$lib/translate"
@@ -10,9 +10,9 @@
     {#each routes as route}
       <a
         href={route.name === "home" ? "/" : route.name}
-        class={($page.url.pathname.length === 1
+        class={(page.url.pathname.length === 1
           ? "home"
-          : $page.url.pathname.slice(1)) === `${route.name}`
+          : page.url.pathname.slice(1)) === `${route.name}`
           ? "selected"
           : ""}>{$settings.language !== "goofy" ? translate(route.name, $settings.language).toUpperCase() : translate(route.name, $settings.language)}</a
       >

@@ -3,27 +3,21 @@
   import Nav from "$lib/components/Nav.svelte"
   import { settings } from "$lib/settings"
   import { themes } from "$lib/themes"
-  import { onMount } from "svelte"
-  import { writable } from "svelte/store"
+  import type { Snippet } from "svelte"
+
+  let { children }: { children: Snippet } = $props()
 
   let timeUntilNext = "[timeUntilNext]"
-  let themeStyles = writable("")
 
-  function applyTheme(): string {
-    return `background: linear-gradient(to bottom, ${themes[$settings.theme][0]}, ${themes[$settings.theme][1]})`
-  }
-
-  $: $settings, ($themeStyles = applyTheme())
-
-  onMount(() => {
-    $themeStyles = applyTheme()
-  })
+  const themeStyles = $derived(
+    `background: linear-gradient(to bottom, ${themes[$settings.theme][0]}, ${themes[$settings.theme][1]})`
+  )
 </script>
 
 <svelte:head>
   <title>{timeUntilNext} | LCHS Go</title>
   <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta http-equiv="x-ua-compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta
     name="description"
@@ -53,9 +47,9 @@
 <main>
   <Nav />
   <div class="slot">
-    <slot />
+    {@render children()}
   </div>
-  <div class="background" style={$themeStyles} />
+  <div class="background" style={themeStyles}></div>
   <Footer />
 </main>
 

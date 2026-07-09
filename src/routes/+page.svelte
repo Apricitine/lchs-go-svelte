@@ -8,14 +8,11 @@
     languages,
   } from "$lib/translate"
   import dayjs from "dayjs"
-  import { type Settings } from "$lib/settings"
   import { randomPick } from "$lib/utilities"
-  import { settings, updateSetting } from "$lib/settings"
-  import { browser } from "$app/environment"
+  import { settings } from "$lib/settings"
   import * as time from "$lib/time"
 
-  let greeting: string
-  let day = dayjs()
+  const day = dayjs()
   const format = "h:mm"
 
   const getTimeOfDayGreeting = (language: Languages) => {
@@ -25,30 +22,31 @@
     else return translate("evening", language)
   }
 
-  let currentPeriod: time.Period = time.period("", dayjs(), dayjs(), false)
-
-  const schedule = time.getSchedule(day, $settings)
-  const scheduleTranslation = Object.keys(
-    schedule
-  )[0] as keyof typeof languages.english
-  const daySchedule =
+  const schedule = $derived(time.getSchedule(day, $settings))
+  const scheduleTranslation = $derived(
+    Object.keys(schedule)[0] as keyof typeof languages.english
+  )
+  const daySchedule = $derived(
     schedule[Object.keys(schedule)[0] as keyof typeof schedule] ?? []
+  )
 
-  // help help help help
-  daySchedule.forEach((p) => {
-    if (p.isCurrent(day)) currentPeriod = p
-  })
+  const currentPeriod = $derived(
+    daySchedule.find((p) => p.isCurrent(day)) ??
+      time.period("", dayjs(), dayjs(), false)
+  )
 
-  let secondsLeft = currentPeriod.end.diff(day, "seconds")
-  let minutesLeft = Math.round(secondsLeft / 60)
-  let percentCompleted = Math.round(100 - (secondsLeft / currentPeriod.end.diff(currentPeriod.start, "seconds")) * 100)
+  const secondsLeft = $derived(currentPeriod.end.diff(day, "seconds"))
+  const minutesLeft = $derived(Math.round(secondsLeft / 60))
+  const percentCompleted = $derived(
+    Math.round(
+      100 -
+        (secondsLeft / currentPeriod.end.diff(currentPeriod.start, "seconds")) *
+          100
+    )
+  )
 
-console.log(percentCompleted)
-</script>
-
-<div class="now-container">
-  <h1 class="welcome">
-    {(greeting = interpolateTranslation(
+  const greeting = $derived(
+    interpolateTranslation(
       translate(
         randomPick(["greeting1", "greeting2", "greeting3"]),
         $settings.language
@@ -60,17 +58,24 @@ console.log(percentCompleted)
           $settings.language
         ).toLocaleLowerCase(),
       }
-    ))}
+    )
+  )
+</script>
+
+<div class="now-container">
+  <h1 class="welcome">
+    {greeting}
   </h1>
   <main class="schedule-container">
     <div class="period-info">
-      <Progress circleProgress={25} now={day.format("hh:mm")}/> // TODO fix this!!
+      <!-- TODO fix circleProgress!! -->
+      <Progress circleProgress={25} now={day.format("hh:mm")} />
       <Info
         periodStart={currentPeriod.start.format(format)}
         periodEnd={currentPeriod.end.format(format)}
         periodName={currentPeriod.name}
         timeLeft={minutesLeft}
-        percentCompleted={percentCompleted}
+        {percentCompleted}
       />
     </div>
     <div class="all-periods">ff</div>
