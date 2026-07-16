@@ -1,27 +1,25 @@
 
-<script>
+<script lang="ts">
     import { translate } from "$lib/translate";
-    function openModal() {
-        // Open the modal here
-    }
+    import { type Days } from "$lib/time";
     let {
-        schedule,
+        scheduletype,
         date,
     }: {
-        schedule: 
+        scheduletype: Days
+        date: string
 
-        }
     } = $props();
 
 
 </script>
 
-<button type="button" class="calendar-day-wrap" onclick = {openModal()}>
+<div class="calendar-day-wrap">
     <div class="calendar-box">
-        <div class="cd-number"> { date.date() } </div>
-        <div class="cd-tag"> { schedule.scheduleType } </div>
+        <div class="cd-number"> { date } </div>
+        <div class="cd-tag"> { scheduletype } </div>
     </div>
-</button>
+</div>
 
 
 <!-- Steps:

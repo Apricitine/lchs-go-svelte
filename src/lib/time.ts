@@ -12,7 +12,7 @@ dayjs.extend(customParseFormat)
 /**
  * Type representing all possible days in the schedule, as defined by *schedules.ts*.
  */
-type Days =
+export type Days =
   | Exclude<keyof typeof days, "middleSchool" | "highSchool">
   | keyof typeof days.middleSchool
   | keyof typeof days.highSchool
