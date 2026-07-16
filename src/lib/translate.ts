@@ -33,7 +33,7 @@ export const languages = {
     regular: "Regular Schedule",
     blockOdd: "Block Odd Schedule",
     blockEven: "Block Even Schedule",
-    noSchool: "No School"
+    noSchool: "No School",
   },
   goofy: {
     home: "hom",
@@ -70,7 +70,7 @@ export const languages = {
     regular: "Regular Schedule",
     blockOdd: "Block Odd Schedule",
     blockEven: "Block Even Schedule",
-    noSchool: "No School"
+    noSchool: "no skool",
   },
 } as const
 

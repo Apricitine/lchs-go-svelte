@@ -1,5 +1,6 @@
 <script lang="ts">
   import Info from "$lib/components/home/periodInfo/Info.svelte"
+  import PeriodList from "$lib/components/home/periodList/PeriodList.svelte"
   import Progress from "$lib/components/home/periodInfo/Progress.svelte"
   import {
     interpolateTranslation,
@@ -7,6 +8,7 @@
     type Languages,
     languages,
   } from "$lib/translate"
+  import { formatPeriodName } from "$lib/periods"
   import dayjs from "dayjs"
   import { randomPick } from "$lib/utilities"
   import { settings } from "$lib/settings"
@@ -28,6 +30,14 @@
   )
   const daySchedule = $derived(
     schedule[Object.keys(schedule)[0] as keyof typeof schedule] ?? []
+  )
+  const visibleDaySchedule = $derived(
+    daySchedule.filter(
+      (period) =>
+        !period.passing &&
+        period.name !== "beforeSchool" &&
+        period.name !== "afterSchool"
+    )
   )
 
   const currentPeriod = $derived(
@@ -73,12 +83,16 @@
       <Info
         periodStart={currentPeriod.start.format(format)}
         periodEnd={currentPeriod.end.format(format)}
-        periodName={currentPeriod.name}
+        periodName={formatPeriodName(currentPeriod.name, $settings.language)}
         timeLeft={minutesLeft}
         {percentCompleted}
       />
     </div>
-    <div class="all-periods">ff</div>
+    <PeriodList
+      periods={visibleDaySchedule}
+      currentTime={day}
+      language={$settings.language}
+    />
   </main>
 </div>
 
@@ -90,7 +104,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 38.4%;
+    width: min(90vw, 980px);
 
     .welcome {
       font-size: 125%;
@@ -100,13 +114,25 @@
 
     .schedule-container {
       width: 100%;
-      display: flex;
-      flex-direction: row;
+      display: grid;
+      grid-template-columns: minmax(360px, 1fr) minmax(260px, 0.72fr);
+      gap: 1rem;
+      align-items: stretch;
 
       .period-info {
         width: 100%;
         display: flex;
         background-color: $clear-gray;
+      }
+    }
+  }
+
+  @media (max-width: 820px) {
+    .now-container {
+      width: min(92vw, 520px);
+
+      .schedule-container {
+        grid-template-columns: 1fr;
       }
     }
   }
