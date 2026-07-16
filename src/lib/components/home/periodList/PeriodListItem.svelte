@@ -39,13 +39,14 @@
 
     &.current {
       background-color: styles.$clear-gray-darker;
+      transform: translateX(2%);
     }
   }
 
   .period-name {
     min-width: 0;
     overflow: hidden;
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     font-weight: 700;
     line-height: 1.1;
     text-overflow: ellipsis;
@@ -54,7 +55,7 @@
 
   .period-time {
     padding-left: 0.85rem;
-    font-size: 0.84rem;
+    font-size: 1rem;
     line-height: 1;
     opacity: 0.88;
     text-align: right;
