@@ -12,37 +12,41 @@
   } = $props()
 </script>
 
-<li class="period-list-item" class:current aria-current={current ? "time" : undefined}>
+<div
+  class="period-list-item"
+  class:current
+  aria-current={current ? "time" : undefined}
+>
   <span class="period-name">{name}</span>
   <span class="period-time">{start} - {end}</span>
-</li>
+</div>
 
 <style lang="scss">
+  @use "$lib/styles.scss";
   .period-list-item {
-    --row-alpha: 0.12;
-
     display: grid;
     grid-template-columns: minmax(0, 1fr) max-content;
     align-items: center;
-    height: 3.45rem;
-    min-height: 3.45rem;
+    height: 100%;
+    min-height: 100%;
     padding: 0 0.85rem;
-    background-color: hsla(0, 0%, 100%, var(--row-alpha));
+    background-color: styles.$clear-gray;
     transition: background-color 150ms ease;
 
     &:nth-child(even) {
-      --row-alpha: 0.18;
+      background-color: styles.$clear-gray-lighter;
     }
 
     &.current {
-      --row-alpha: 0.28;
+      background-color: styles.$clear-gray-darker;
+      transform: translateX(2%);
     }
   }
 
   .period-name {
     min-width: 0;
     overflow: hidden;
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     font-weight: 700;
     line-height: 1.1;
     text-overflow: ellipsis;
@@ -51,7 +55,7 @@
 
   .period-time {
     padding-left: 0.85rem;
-    font-size: 0.84rem;
+    font-size: 1rem;
     line-height: 1;
     opacity: 0.88;
     text-align: right;

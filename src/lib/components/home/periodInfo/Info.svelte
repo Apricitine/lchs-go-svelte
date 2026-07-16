@@ -24,8 +24,7 @@
 </main>
 
 <style lang="scss">
-  $clear-gray: hsla(0, 0%, 0%, 0.25%);
-  $clear-white: hsla(0, 0%, 100%, 0.5%);
+  @use '$lib/styles.scss';
 
   .info {
     width: 100%;
@@ -80,10 +79,10 @@
         width: 50%;
 
         &.bottom {
-          border-top: 2px solid $clear-white;
+          border-top: 2px solid styles.$clear-white;
         }
         &.top {
-          border-bottom: 2px solid $clear-white;
+          border-bottom: 2px solid styles.$clear-white;
         }
       }
     }

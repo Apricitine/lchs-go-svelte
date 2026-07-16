@@ -116,7 +116,7 @@
       width: 100%;
       display: grid;
       grid-template-columns: minmax(360px, 1fr) minmax(260px, 0.72fr);
-      gap: 1rem;
+      gap: 0;
       align-items: stretch;
 
       .period-info {
