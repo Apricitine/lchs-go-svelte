@@ -19,7 +19,7 @@
 
 <style lang="scss">
   .period-list-item {
-    --row-alpha: 0.12;
+    @use '$lib/styles.scss'
 
     display: grid;
     grid-template-columns: minmax(0, 1fr) max-content;
@@ -27,15 +27,15 @@
     height: 3.45rem;
     min-height: 3.45rem;
     padding: 0 0.85rem;
-    background-color: hsla(0, 0%, 100%, var(--row-alpha));
+    background-color: hsla(0, 0%, 0%, $row-alpha);
     transition: background-color 150ms ease;
 
     &:nth-child(even) {
-      --row-alpha: 0.18;
+      $row-alpha: 0.25%;
     }
 
     &.current {
-      --row-alpha: 0.28;
+      $row-alpha: 0.28%;
     }
   }
 
