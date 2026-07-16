@@ -12,15 +12,18 @@
   } = $props()
 </script>
 
-<li class="period-list-item" class:current aria-current={current ? "time" : undefined}>
+<li
+  class="period-list-item"
+  class:current
+  aria-current={current ? "time" : undefined}
+>
   <span class="period-name">{name}</span>
   <span class="period-time">{start} - {end}</span>
 </li>
 
 <style lang="scss">
+  @use "$lib/styles.scss";
   .period-list-item {
-    @use '$lib/styles.scss'
-
     display: grid;
     grid-template-columns: minmax(0, 1fr) max-content;
     align-items: center;
