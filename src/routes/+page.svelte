@@ -79,7 +79,7 @@
   <main class="schedule-container">
     <div class="period-info">
       <!-- TODO fix circleProgress!! -->
-      <Progress circleProgress={25} now={day.format("hh:mm")} />
+      <Progress circleProgress={100} now={day.format("hh:mm")} />
       <Info
         periodStart={currentPeriod.start.format(format)}
         periodEnd={currentPeriod.end.format(format)}
