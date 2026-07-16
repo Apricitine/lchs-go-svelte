@@ -18,7 +18,7 @@
   } = $props()
 </script>
 
-<ul class="period-list" aria-label="Today's periods">
+<div class="period-list" aria-label="Today's periods">
   {#each periods as period (period.name + period.start.valueOf())}
     <PeriodListItem
       name={formatPeriodName(period.name, language)}
@@ -27,7 +27,7 @@
       current={period.isCurrent(currentTime)}
     />
   {/each}
-</ul>
+</div>
 
 <style lang="scss">
   .period-list {
