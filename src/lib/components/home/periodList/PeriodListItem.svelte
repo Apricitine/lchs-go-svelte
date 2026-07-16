@@ -34,11 +34,11 @@
     transition: background-color 150ms ease;
 
     &:nth-child(even) {
-      background-color: styles.$clear-gray;
+      background-color: styles.$clear-gray-lighter;
     }
 
     &.current {
-      background-color: styles.$clear-gray;
+      background-color: styles.$clear-gray-darker;
     }
   }
 
