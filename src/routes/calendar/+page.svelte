@@ -1,41 +1,40 @@
 <script lang="ts">
-    import CalendarDate from "$lib/components/CalendarDate.svelte"
-    import ScheduleModal from "$lib/components/ScheduleModal.svelte"
-    import PeriodList from "$lib/components/home/periodList/PeriodList.svelte"
-    import { settings } from "$lib/settings"
-    import { translate } from "$lib/translate"
-    import { getSchedule, getScheduleType } from "$lib/time"
-    import dayjs, { type Dayjs } from "dayjs"
+  import CalendarDate from "$lib/components/CalendarDate.svelte"
+  import ScheduleModal from "$lib/components/ScheduleModal.svelte"
+  import PeriodList from "$lib/components/home/periodList/PeriodList.svelte"
+  import { settings } from "$lib/settings"
+  import { translate } from "$lib/translate"
+  import { getSchedule, getScheduleType } from "$lib/time"
+  import dayjs, { type Dayjs } from "dayjs"
+  const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
-    const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  let month = $state(dayjs().startOf("month"))
+  let selected = $state<Dayjs | null>(null)
+  let sourceRect = $state<DOMRect | null>(null)
+  let showModal = $state(false)
 
-    let month = $state(dayjs().startOf("month"))
-    let selected = $state<Dayjs | null>(null)
-    let sourceRect = $state<DOMRect | null>(null)
-    let showModal = $state(false)
+  const grid = $derived.by(() => {
+  const start = month.startOf("week")
+  const end = month.endOf("month").endOf("week")
+  const days: Dayjs[] = []
+  for (let d = start; !d.isAfter(end, "day"); d = d.add(1, "day")) days.push(d)
+      return days
+  })
 
-    const grid = $derived.by(() => {
-    const start = month.startOf("week")
-    const end = month.endOf("month").endOf("week")
-    const days: Dayjs[] = []
-    for (let d = start; !d.isAfter(end, "day"); d = d.add(1, "day")) days.push(d)
-        return days
-    })
+  const selectedType = $derived(selected ? getScheduleType(selected, $settings) : null)
+  const selectedPeriods = $derived(
+  selected && selectedType
+  ? (getSchedule(selected, $settings)[selectedType] ?? []).filter(
+      (p) => !p.passing && p.name !== "beforeSchool" && p.name !== "afterSchool"
+      )
+  : []
+  )
 
-    const selectedType = $derived(selected ? getScheduleType(selected, $settings) : null)
-    const selectedPeriods = $derived(
-    selected && selectedType
-    ? (getSchedule(selected, $settings)[selectedType] ?? []).filter(
-        (p) => !p.passing && p.name !== "beforeSchool" && p.name !== "afterSchool"
-        )
-    : []
-    )
-
-    function open(date: Dayjs, rect: DOMRect) {
-        selected = date
-        sourceRect = rect
-        showModal = true
-    }
+  function open(date: Dayjs, rect: DOMRect) {
+      selected = date
+      sourceRect = rect
+      showModal = true
+  }
 </script>
 
 <div class="calendar">
@@ -62,7 +61,6 @@
 <ScheduleModal bind:showModal {sourceRect}>
   {#if selected && selectedType}
     <h2>{selected.format("dddd, MMMM D")}</h2>
-    <p>{translate(selectedType, $settings.language)}</p>
     {#if selectedType === "noSchool"}
       <p>No school this day.</p>
     {:else}
