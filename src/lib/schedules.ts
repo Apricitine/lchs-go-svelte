@@ -15,6 +15,9 @@ type Week = [
 ]
 
 export const days = {
+  overrides: {
+//add overrides here
+  },
   noSchool: {
     noSchool: ["12:00 AM", "11:59 PM"],
   },

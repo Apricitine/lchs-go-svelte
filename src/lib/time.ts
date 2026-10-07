@@ -68,6 +68,10 @@ export function period(
 }
 
 
+export function getScheduleType(date: dayjs.Dayjs, settings: Settings): Days {
+  return Object.keys(getSchedule(date, settings))[0] as Days
+}
+
 /**
  * A very important function that returns the schedule for the current date based on the grade level specified in the settings among other options.
  * @param date a dayjs object with the current date
