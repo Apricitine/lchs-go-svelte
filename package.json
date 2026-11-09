@@ -21,6 +21,7 @@
   "type": "module",
   "dependencies": {
     "dayjs": "^1.11.23",
+    "ical.js": "^2.2.1",
     "sass": "^1.104.1"
   }
 }

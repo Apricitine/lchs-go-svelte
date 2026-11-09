@@ -11,6 +11,7 @@
   <div class="bar"></div>
   <div class="circle"></div>
   <div class="tracker" style="top: {circleProgress}%">
+    <!-- TODO: fix this -->
     <span>{now[0] === "0" ? now.slice(1) : now}</span>
   </div>
 </div>

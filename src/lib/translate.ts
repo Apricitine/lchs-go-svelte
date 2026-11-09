@@ -34,6 +34,10 @@ export const languages = {
     blockOdd: "Block Odd Schedule",
     blockEven: "Block Even Schedule",
     noSchool: "No School",
+    events: "Events",
+    noEvents: "No events",
+    allDay: "All day",
+    eventsError: "Couldn't load events",
   },
   goofy: {
     home: "hom",
@@ -71,6 +75,10 @@ export const languages = {
     blockOdd: "Block Odd Schedule",
     blockEven: "Block Even Schedule",
     noSchool: "no skool",
+    events: "stuffs happenin",
+    noEvents: "nuthin goin on",
+    allDay: "all dayyy",
+    eventsError: "uh oh no events :(",
   },
 } as const
 
